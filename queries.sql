@@ -2,7 +2,7 @@
 
 SELECT *
 FROM `students`
-WHERE `date_of_birth` LIKE "1990%";
+WHERE `date_of_birth` LIKE "1990%" --WHERE YEAR (`date_of_birth`) = 1990;
 
 -- 2. Selezionare tutti i corsi che valgono più di 10 crediti (479)
 
@@ -14,7 +14,10 @@ WHERE `cfu` > 10;
 
 SELECT *, DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), date_of_birth)), '%Y') + 1 AS age
 FROM students;
-
+/* SELECT `id`, `name`, `surname`, `date_of_birth`, TIMESTAMPDIFF(YEAR, `date_of_birth, CURDATE())
+ FROM `students`
+ WHERE TIMESTAMPDIFF (YEAR, `date_of_birth`, CURDATE()) > 30
+ ORDER BY `age`*/
 
 /* 4. Selezionare tutti i corsi del primo semestre del primo anno di un qualsiasi corso di
 laurea (286)*/

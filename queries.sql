@@ -53,3 +53,68 @@ SELECT *
 FROM `teachers`
 WHERE `phone` IS NULL;
 
+                                -- SECONDA PARTE
+
+-- 1. Selezionare tutti gli studenti iscritti al Corso di Laurea in Economia
+
+SELECT `students`.`name` AS `student_name`, `surname`, `degrees`.`name` AS `degree_name`
+FROM `students`
+INNER JOIN `degrees`
+ON `students`.`id` = `degrees`.`id`
+WHERE `degrees`.`name` = 'Corso di Laurea in Economia';
+
+-- 2. Selezionare tutti i Corsi di Laurea Magistrale del Dipartimento di Neuroscienze
+
+SELECT `degrees`.`name` AS `degree_name`, `level`, `departments`.`name` AS `department_name`
+FROM `courses`
+INNER JOIN `degrees`
+ON `courses`.`id` = `degrees`.`id`
+INNER JOIN `departments`
+ON `degrees`.`id` = `departments`.`id`
+WHERE `departments`.`name` = 'Dipartimento di Neuroscienze'
+AND `degrees`.`level` = 'magistrale';
+
+
+-- 3. Selezionare tutti i corsi in cui insegna Fulvio Amato (id=44)
+
+SELECT `teachers`.`name` AS `teacher_name`, `surname`, `courses`.`name` AS `course_name`, `description`, `cfu`
+FROM `teachers`
+INNER JOIN `course_teacher`
+ON `teachers`.`id` = `course_teacher`.`teacher_id`
+INNER JOIN `courses`
+ON `courses`.`id` = `course_teacher`.`course_id`
+WHERE `teachers`.`name` = 'Fulvio'
+AND `teachers`.`surname` = 'Amato';
+
+-- 4. Selezionare tutti gli studenti con i dati relativi al corso di laurea a cui sono iscritti e il relativo dipartimento, in ordine alfabetico per cognome e nome
+
+SELECT `students`.`name` AS `student_name`, `surname`, `degrees`.`name` AS `degree_name`, `level`, `departments`.`name` AS `department_name`
+FROM `students`
+INNER JOIN `degrees`
+ON `students`.`id` = `degrees`.`id`
+INNER JOIN `departments`
+ON `degrees`.`id` = `departments`.`id`
+ORDER BY `students`.`surname`, `students`.`name` ASC
+
+-- 5. Selezionare tutti i corsi di laurea con i relativi corsi e insegnanti
+
+SELECT `teachers`.`name` AS `teacher_name`, `surname`, `courses`.`name` AS `course_name`, `description`, `period`, `year`, `cfu`, `degrees`.`name` AS `degree_name`
+FROM `teachers`
+INNER JOIN `course_teacher`
+ON `teachers`.`id` = `course_teacher`.`course_id`
+INNER JOIN `courses`
+ON `courses`.`id` = `course_teacher`.`teacher_id`
+INNER JOIN `degrees`
+ON `courses`.`id` = `degrees`.`id`
+
+-- 6. Selezionare tutti i docenti che insegnano nel Dipartimento di Matematica (54)
+
+SELECT `teachers`.`name` AS `teacher_name`, `surname`, `departments`.`name` AS `department_name`
+FROM `teachers`
+LEFT JOIN `departments`
+ON `teachers`.`id`
+WHERE `departments`.`name` = 'Dipartimento di Matematica';
+
+
+
+

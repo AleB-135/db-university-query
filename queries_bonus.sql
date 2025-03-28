@@ -21,3 +21,16 @@ GROUP BY `exam_id`
 SELECT `department_id`, COUNT (*)
 FROM `degrees`
 GROUP BY `department_id`
+
+-- SECONDA PARTE
+
+-- 7. BONUS: Selezionare per ogni studente quanti tentativi d’esame ha sostenuto per superare ciascuno dei suoi esami
+
+SELECT `students`.`name` AS `student_name`, `surname`, `exam_id`, `vote`, `date`, `hour`
+FROM `students`
+INNER JOIN `exam_student`
+ON `students`.`id` = `exam_student`.`exam_id`
+INNER JOIN `exams`
+ON `exams`.`id` = `exam_student`.`student_id`
+WHERE `vote` <= 17
+ORDER BY `students`.`name`, `vote` ASC;
